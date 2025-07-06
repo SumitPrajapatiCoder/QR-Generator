@@ -1,0 +1,48 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+
+# Django specific
+*.log
+*.pot
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+static_root/
+*.sqlite3
+
+# Migrations (optional — only if you don’t want to track them)
+**/migrations/*.pyc
+**/migrations/__pycache__/
+**/migrations/*.py
+!*/migrations/__init__.py  # keep __init__.py so Django detects the migration package
+
+# VS Code & IDEs
+.vscode/
+.idea/
+*.swp
+
+# Environment variables and credentials
+.env
+.env.*
+
+# Mac and OS generated
+.DS_Store
+Thumbs.db
+
+# Pip files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Requirements and package locks (optional)
+requirements*.txt
+Pipfile.lock

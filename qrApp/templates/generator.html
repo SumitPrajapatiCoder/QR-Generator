@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>QR Code Generator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        form {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+            color: #444;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 0.6rem 1.2rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            margin: 0.25rem 0.25rem 0 0;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+        }
+
+        button[type="button"] {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .qr-output {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .qr-output img {
+            margin-top: 1rem;
+            max-width: 300px;
+            border: 2px solid #007bff;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .qr-output button {
+            background-color: #28a745;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>QR Code Generator</h2>
+
+    <div class="container">
+        <form method="post" id="qrForm">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="message">Message</label>
+                <input type="text" id="message" name="message" required value="{{ form_data.message }}">
+            </div>
+
+            <div class="form-group">
+                <label for="link">URL</label>
+                <input type="url" id="link" name="link" required value="{{ form_data.link }}">
+            </div>
+
+            <div class="form-group">
+                <label for="box_size">Box Size</label>
+                <input type="number" id="box_size" name="box_size" value="{{ form_data.box_size }}">
+            </div>
+
+            <div class="form-group">
+                <label for="border">Border Size</label>
+                <input type="number" id="border" name="border" value="{{ form_data.border }}">
+            </div>
+
+            <div class="form-group">
+                <label for="fill_color">Fill Color</label>
+                <input type="color" id="fill_color" name="fill_color" value="{{ form_data.fill_color|default:'#000000' }}">
+         
+            </div>
+            
+            <div class="form-group">
+                <label for="back_color">Background Color</label>
+                <input type="color" id="back_color" name="back_color" value="{{ form_data.back_color|default:'#ffffff' }}">
+            </div>            
+
+            <div class="form-group">
+                <label for="display_mode">Display Mode</label>
+                <select name="display_mode" id="display_mode">
+                    <option value="message" {% if form_data.display_mode == 'message' %}selected{% endif %}>Message Only</option>
+                    <option value="url" {% if form_data.display_mode == 'url' %}selected{% endif %}>URL Only</option>
+                    <option value="both" {% if form_data.display_mode == 'both' %}selected{% endif %}>Message + URL</option>
+                </select>
+            </div>
+
+            <button type="submit">Generate QR Code</button>
+            <button type="button" onclick="clearForm()">Clear</button>
+        </form>
+
+        {% if qr_image_url %}
+        <div class="qr-output" id="qr-section">
+            <h3>Your QR Code:</h3>
+            <img src="{{ qr_image_url }}" alt="QR Code"><br>
+            <a href="{{ qr_image_url }}" download>
+                <button>Download QR Code</button>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function clearForm() {
+            window.location.href = window.location.href;
+        }
+    </script>
+    
+</body>
+
+</html>
