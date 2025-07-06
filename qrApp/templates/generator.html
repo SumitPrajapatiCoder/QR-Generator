@@ -10,6 +10,7 @@
             background-color: #f0f2f5;
             padding: 2rem;
             text-align: center;
+            margin: 0;
         }
 
         h2 {
@@ -23,6 +24,7 @@
             align-items: flex-start;
             gap: 2rem;
             flex-wrap: wrap;
+            padding: 1rem;
         }
 
         form {
@@ -33,6 +35,7 @@
             text-align: left;
             max-width: 400px;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .form-group {
@@ -53,6 +56,7 @@
             font-size: 1rem;
             border: 1px solid #ccc;
             border-radius: 6px;
+            box-sizing: border-box;
         }
 
         button {
@@ -80,21 +84,65 @@
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             max-width: 350px;
+            width: 100%;
             text-align: center;
+            box-sizing: border-box;
         }
 
         .qr-output img {
             margin-top: 1rem;
-            max-width: 300px;
+            max-width: 100%;
             border: 2px solid #007bff;
             padding: 1rem;
             background: white;
             border-radius: 10px;
+            box-sizing: border-box;
         }
 
         .qr-output button {
             background-color: #28a745;
             margin-top: 1rem;
+        }
+
+     
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            form,
+            .qr-output {
+                max-width: 90%;
+                width: 100%;
+                padding: 1.5rem;
+            }
+
+            button {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            input,
+            select {
+                font-size: 0.95rem;
+            }
+
+            button {
+                font-size: 0.95rem;
+                padding: 0.5rem 1rem;
+            }
         }
     </style>
 </head>
@@ -127,21 +175,25 @@
 
             <div class="form-group">
                 <label for="fill_color">Fill Color</label>
-                <input type="color" id="fill_color" name="fill_color" value="{{ form_data.fill_color|default:'#000000' }}">
-         
+                <input type="color" id="fill_color" name="fill_color"
+                    value="{{ form_data.fill_color|default:'#000000' }}">
+
             </div>
-            
+
             <div class="form-group">
                 <label for="back_color">Background Color</label>
-                <input type="color" id="back_color" name="back_color" value="{{ form_data.back_color|default:'#ffffff' }}">
-            </div>            
+                <input type="color" id="back_color" name="back_color"
+                    value="{{ form_data.back_color|default:'#ffffff' }}">
+            </div>
 
             <div class="form-group">
                 <label for="display_mode">Display Mode</label>
                 <select name="display_mode" id="display_mode">
-                    <option value="message" {% if form_data.display_mode == 'message' %}selected{% endif %}>Message Only</option>
+                    <option value="message" {% if form_data.display_mode == 'message' %}selected{% endif %}>Message Only
+                    </option>
                     <option value="url" {% if form_data.display_mode == 'url' %}selected{% endif %}>URL Only</option>
-                    <option value="both" {% if form_data.display_mode == 'both' %}selected{% endif %}>Message + URL</option>
+                    <option value="both" {% if form_data.display_mode == 'both' %}selected{% endif %}>Message + URL
+                    </option>
                 </select>
             </div>
 
@@ -165,7 +217,7 @@
             window.location.href = window.location.href;
         }
     </script>
-    
+
 </body>
 
 </html>
